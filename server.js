@@ -27,7 +27,11 @@ const usuarios = [
 
 // 2. Ruta de Login
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body || {};
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Usuario y contraseña son obligatorios.' });
+    }
 
     const usuarioValido = usuarios.find(u => u.username === username && u.password === password);
 
