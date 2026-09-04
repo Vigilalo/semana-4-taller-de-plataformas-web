@@ -37,12 +37,13 @@ app.post('/login', (req, res) => {
 
     if (usuarioValido) {
         // Generar token JWT
-        const token = jwt.sign({ username: usuarioValido.username }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
+        const token = jwt.sign({ username: usuarioValido.username }, process.env.JWT_SECRET, { expiresIn: TOKEN_EXPIRATION });
 
         // Enviar token como cookie httpOnly
         res.cookie('token', token, { 
             httpOnly: true, 
-            secure: false, // Cambiar a true si el entorno es HTTPS
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
             maxAge: 3600000 
         });
 
