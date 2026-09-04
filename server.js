@@ -1,10 +1,17 @@
+require('dotenv').config();
+
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 3010; // Usando el puerto 3010 de tu intento anterior
-const SECRET_KEY = 'clave_secreta_universidad'; // Clave para firmar el token
+const SECRET_KEY = process.env.JWT_SECRET; // Clave para firmar el token definida en variables de entorno
+
+if (!SECRET_KEY) {
+    console.error('Error: falta definir JWT_SECRET en las variables de entorno.');
+    process.exit(1);
+}
 
 // Configuración de seguridad utilizada por el servidor
 const TOKEN_EXPIRATION = '1h';
