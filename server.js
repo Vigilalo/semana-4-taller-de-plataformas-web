@@ -6,6 +6,9 @@ const app = express();
 const PORT = 3010; // Usando el puerto 3010 de tu intento anterior
 const SECRET_KEY = 'clave_secreta_universidad'; // Clave para firmar el token
 
+// Configuración de seguridad utilizada por el servidor
+const TOKEN_EXPIRATION = '1h';
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -23,7 +26,7 @@ app.post('/login', (req, res) => {
 
     if (usuarioValido) {
         // Generar token JWT
-        const token = jwt.sign({ username: usuarioValido.username }, SECRET_KEY, { expiresIn: '1h' });
+        const token = jwt.sign({ username: usuarioValido.username }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
 
         // Enviar token como cookie httpOnly
         res.cookie('token', token, { 
