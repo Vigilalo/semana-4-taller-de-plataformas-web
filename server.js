@@ -63,11 +63,11 @@ const verificarToken = (req, res, next) => {
     }
 
     try {
-        const verificado = jwt.verify(token, SECRET_KEY);
+        const verificado = jwt.verify(token, process.env.JWT_SECRET);
         req.usuario = verificado;
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Token inválido o expirado.' });
+        return res.status(401).json({ message: 'Token inválido o expirado.' });
     }
 };
 
@@ -78,7 +78,11 @@ app.get('/privada', verificarToken, (req, res) => {
 
 // 4. Ruta de Cierre de sesión (Logout)
 app.post('/logout', (req, res) => {
-    res.clearCookie('token', { httpOnly: true, secure: false });
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
     res.json({ message: 'Sesión cerrada exitosamente. Cookie eliminada.' });
 });
 
