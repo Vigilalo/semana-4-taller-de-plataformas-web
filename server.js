@@ -1,10 +1,17 @@
+require('dotenv').config();
+
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 3010; // Usando el puerto 3010 de tu intento anterior
-const SECRET_KEY = 'clave_secreta_universidad'; // Clave para firmar el token
+const SECRET_KEY = process.env.JWT_SECRET; // Clave para firmar el token definida en variables de entorno
+
+if (!SECRET_KEY) {
+    console.error('Error: falta definir JWT_SECRET en las variables de entorno.');
+    process.exit(1);
+}
 
 // Configuración de seguridad utilizada por el servidor
 const TOKEN_EXPIRATION = '1h';
@@ -20,13 +27,17 @@ const usuarios = [
 
 // 2. Ruta de Login
 app.post('/login', (req, res) => {
-    const { username, password } = req.body;
+    const { username, password } = req.body || {};
+
+    if (!username || !password) {
+        return res.status(400).json({ message: 'Usuario y contraseña son obligatorios.' });
+    }
 
     const usuarioValido = usuarios.find(u => u.username === username && u.password === password);
 
     if (usuarioValido) {
         // Generar token JWT
-        const token = jwt.sign({ username: usuarioValido.username }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
+        const token = jwt.sign({ username: usuarioValido.username }, process.env.JWT_SECRET, { expiresIn: TOKEN_EXPIRATION });
 
         if (!usuarioExiste) {
     return res.status(404).json({
@@ -37,7 +48,8 @@ app.post('/login', (req, res) => {
         // Enviar token como cookie httpOnly
         res.cookie('token', token, { 
             httpOnly: true, 
-            secure: false, // Cambiar a true si el entorno es HTTPS
+            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'strict',
             maxAge: 3600000 
         });
 
@@ -57,11 +69,11 @@ const verificarToken = (req, res, next) => {
     }
 
     try {
-        const verificado = jwt.verify(token, SECRET_KEY);
+        const verificado = jwt.verify(token, process.env.JWT_SECRET);
         req.usuario = verificado;
         next();
     } catch (error) {
-        res.status(401).json({ message: 'Token inválido o expirado.' });
+        return res.status(401).json({ message: 'Token inválido o expirado.' });
     }
 };
 
@@ -72,7 +84,11 @@ app.get('/privada', verificarToken, (req, res) => {
 
 // 4. Ruta de Cierre de sesión (Logout)
 app.post('/logout', (req, res) => {
-    res.clearCookie('token', { httpOnly: true, secure: false });
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict'
+    });
     res.json({ message: 'Sesión cerrada exitosamente. Cookie eliminada.' });
 });
 
