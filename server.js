@@ -29,9 +29,17 @@ const usuarios = [
 app.post('/login', (req, res) => {
     const { username, password } = req.body || {};
 
-    if (!username || !password) {
-        return res.status(400).json({ message: 'Usuario y contraseña son obligatorios.' });
-    }
+    // Validar que los datos sean cadenas de texto
+if (
+    typeof username !== 'string' ||
+    typeof password !== 'string' ||
+    username.trim() === '' ||
+    password.trim() === ''
+) {
+    return res.status(400).json({
+        message: 'Usuario y contraseña son obligatorios y deben ser válidos.'
+    });
+}
 
     const usuarioValido = usuarios.find(u => u.username === username && u.password === password);
 
