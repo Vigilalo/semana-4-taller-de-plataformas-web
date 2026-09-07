@@ -87,7 +87,15 @@ const verificarToken = (req, res, next) => {
 
 // 3. Ruta Privada protegida por el middleware
 app.get('/privada', verificarToken, (req, res) => {
-    res.json({ message: `¡Bienvenido a la ruta secreta, ${req.usuario.username}!` });
+
+    res.status(200).json({
+        message: 'Acceso autorizado a la ruta privada.',
+        usuario: {
+            username: req.usuario.username
+        },
+        autenticado: true
+    });
+
 });
 
 // 4. Ruta de Cierre de sesión (Logout)
