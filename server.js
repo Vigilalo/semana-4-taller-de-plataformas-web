@@ -28,6 +28,12 @@ app.post('/login', (req, res) => {
         // Generar token JWT
         const token = jwt.sign({ username: usuarioValido.username }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
 
+        if (!usuarioExiste) {
+    return res.status(404).json({
+        message: 'El usuario no existe.'
+    });
+}
+
         // Enviar token como cookie httpOnly
         res.cookie('token', token, { 
             httpOnly: true, 
