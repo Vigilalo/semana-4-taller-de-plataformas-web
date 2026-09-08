@@ -46,7 +46,7 @@ semana-4-taller-de-plataformas-web/
 ├── .env.example
 └── README.md
 ```
-## Instalación y ejecución
+## ⚙️ Instalación y ejecución
 
 ### Requisitos
 
@@ -56,15 +56,13 @@ semana-4-taller-de-plataformas-web/
 
 ### Instalación
 
-Desde la carpeta raíz del proyecto, ejecutar:
-
 ```bash
 npm install
 ```
 
 ### Configuración
 
-Crear un archivo `.env` y definir una clave secreta para JWT:
+Crear un archivo `.env` con el siguiente contenido:
 
 ```env
 JWT_SECRET=clave_local_de_prueba
@@ -72,29 +70,28 @@ NODE_ENV=development
 PORT=3010
 ```
 
-El archivo `.env` no debe subirse al repositorio porque puede contener
-información sensible.
+> [!IMPORTANT]
+> El archivo `.env` no debe subirse al repositorio, ya que puede contener información sensible.
 
-### Inicio del servidor
-
-Ejecutar:
+### Iniciar servidor
 
 ```bash
 npm start
 ```
 
-El servidor estará disponible en:
+Servidor disponible en:
 
 ```text
 http://localhost:3010
 ```
-## Endpoints de autenticación
 
-### POST /login
+## 🔐 Endpoints de autenticación
 
-Permite autenticar a un usuario.
+### `POST /login`
 
-Ejemplo de solicitud:
+Autentica a un usuario con credenciales válidas.
+
+**Ejemplo de solicitud:**
 
 ```json
 {
@@ -103,26 +100,28 @@ Ejemplo de solicitud:
 }
 ```
 
-Cuando las credenciales son correctas, el servidor genera un JWT y lo almacena
-en la cookie `token`.
+**Resultado esperado:**
+- Generación de JWT.
+- Almacenamiento del token en la cookie `token`.
 
-### GET /privada
+### `GET /privada`
 
-Permite acceder a información protegida. La solicitud requiere una cookie
-`token` válida.
+Permite acceder a una ruta protegida.  
+Requiere una cookie `token` válida.
 
-### POST /logout
+### `POST /logout`
 
-Cierra la sesión del usuario y elimina la cookie `token`.
+Cierra la sesión y elimina la cookie `token`.
 
-## Respuestas esperadas
+## 📬 Respuestas esperadas
 
-- Login correcto: `200 OK`.
-- Credenciales incorrectas: `401 Unauthorized`.
-- Usuario inexistente: respuesta de error según la validación implementada.
-- Acceso sin token: `401 Unauthorized`.
-- Acceso con token válido: `200 OK`.
-## Casos de prueba
+- `200 OK` para login exitoso.
+- `401 Unauthorized` para credenciales incorrectas.
+- Error de validación para usuario inexistente.
+- `401 Unauthorized` si no existe token.
+- `200 OK` si el token es válido.
+
+## 🧪 Casos de prueba
 
 | Nº | Caso | Solicitud | Resultado esperado |
 |---:|---|---|---|
@@ -134,22 +133,27 @@ Cierra la sesión del usuario y elimina la cookie `token`.
 | 6 | Cierre de sesión | `POST /logout` | Cookie eliminada |
 | 7 | Acceso posterior al logout | `GET /privada` | `401 Unauthorized` |
 
-Las pruebas deben ejecutarse mediante Postman o una herramienta equivalente.
-Cada resultado debe respaldarse con una captura de pantalla.
+> [!NOTE]
+> Las pruebas deben ejecutarse con **Postman** o una herramienta equivalente, y cada resultado debe respaldarse con una captura de pantalla.
 
-## Colaboración del equipo
+## 👥 Trabajo colaborativo
 
-El trabajo se organizó mediante ramas independientes y commits específicos
-para cada integrante.
+El equipo trabajó mediante ramas independientes y commits específicos por integrante.
 
 | Integrante | Rama | Responsabilidad |
 |---|---|---|
 | Yilber Yañez | Rama de autenticación | Validación de usuarios y credenciales |
-| Víctor Aizpurua | feature/victor-auth-security | JWT, cookies, middleware y logout |
-| Matías Aquea | feature/matias-aquea | Documentación técnica, pruebas y organización del trabajo |
+| Víctor Aizpurua | `feature/victor-auth-security` | JWT, cookies, middleware y logout |
+| Matías Aquea | `feature/matias-aquea` | Documentación técnica, pruebas y organización |
 
-Cada integrante desarrolló sus cambios en una rama separada. Posteriormente,
-los aportes fueron integrados mediante Pull Requests hacia la rama principal.
+Cada integrante desarrolló sus cambios en una rama separada. Luego, los aportes se integraron mediante **Pull Requests** hacia la rama principal.
 
-La revisión del historial de GitHub permite identificar el autor, el mensaje y
-los archivos modificados en cada commit.
+La revisión del historial en GitHub permite identificar el autor, el mensaje y los archivos modificados en cada commit.
+
+## ✅ Aprendizajes logrados
+
+- Implementación de autenticación basada en JWT.
+- Uso de cookies seguras con `httpOnly`.
+- Protección de rutas privadas con middleware.
+- Gestión de variables de entorno con `dotenv`.
+- Trabajo colaborativo usando ramas, commits y Pull Requests.
