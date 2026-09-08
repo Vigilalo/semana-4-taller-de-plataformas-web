@@ -88,3 +88,37 @@ El servidor estará disponible en:
 ```text
 http://localhost:3010
 ```
+## Endpoints de autenticación
+
+### POST /login
+
+Permite autenticar a un usuario.
+
+Ejemplo de solicitud:
+
+```json
+{
+  "username": "matias",
+  "password": "aiep2026"
+}
+```
+
+Cuando las credenciales son correctas, el servidor genera un JWT y lo almacena
+en la cookie `token`.
+
+### GET /privada
+
+Permite acceder a información protegida. La solicitud requiere una cookie
+`token` válida.
+
+### POST /logout
+
+Cierra la sesión del usuario y elimina la cookie `token`.
+
+## Respuestas esperadas
+
+- Login correcto: `200 OK`.
+- Credenciales incorrectas: `401 Unauthorized`.
+- Usuario inexistente: respuesta de error según la validación implementada.
+- Acceso sin token: `401 Unauthorized`.
+- Acceso con token válido: `200 OK`.
