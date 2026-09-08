@@ -46,3 +46,45 @@ semana-4-taller-de-plataformas-web/
 ├── .env.example
 └── README.md
 ```
+## Instalación y ejecución
+
+### Requisitos
+
+- Node.js instalado.
+- npm disponible en la terminal.
+- Archivo `.env` configurado a partir de `.env.example`.
+
+### Instalación
+
+Desde la carpeta raíz del proyecto, ejecutar:
+
+```bash
+npm install
+```
+
+### Configuración
+
+Crear un archivo `.env` y definir una clave secreta para JWT:
+
+```env
+JWT_SECRET=clave_local_de_prueba
+NODE_ENV=development
+PORT=3010
+```
+
+El archivo `.env` no debe subirse al repositorio porque puede contener
+información sensible.
+
+### Inicio del servidor
+
+Ejecutar:
+
+```bash
+npm start
+```
+
+El servidor estará disponible en:
+
+```text
+http://localhost:3010
+```
