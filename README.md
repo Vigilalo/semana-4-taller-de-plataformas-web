@@ -145,8 +145,8 @@ para cada integrante.
 | Integrante | Rama | Responsabilidad |
 |---|---|---|
 | Yilber Yañez | Rama de autenticación | Validación de usuarios y credenciales |
-| Víctor Aizpurua | Rama de seguridad | JWT, cookies, middleware y logout |
-| Matías Aquea | `feature/matias-aquea` | Documentación técnica, pruebas y organización del trabajo |
+| Víctor Aizpurua | feature/victor-auth-security | JWT, cookies, middleware y logout |
+| Matías Aquea | feature/matias-aquea | Documentación técnica, pruebas y organización del trabajo |
 
 Cada integrante desarrolló sus cambios en una rama separada. Posteriormente,
 los aportes fueron integrados mediante Pull Requests hacia la rama principal.
