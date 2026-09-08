@@ -136,3 +136,20 @@ Cierra la sesión del usuario y elimina la cookie `token`.
 
 Las pruebas deben ejecutarse mediante Postman o una herramienta equivalente.
 Cada resultado debe respaldarse con una captura de pantalla.
+
+## Colaboración del equipo
+
+El trabajo se organizó mediante ramas independientes y commits específicos
+para cada integrante.
+
+| Integrante | Rama | Responsabilidad |
+|---|---|---|
+| Yilber Yañez | Rama de autenticación | Validación de usuarios y credenciales |
+| Víctor Aizpurua | Rama de seguridad | JWT, cookies, middleware y logout |
+| Matías Aquea | `feature/matias-aquea` | Documentación técnica, pruebas y organización del trabajo |
+
+Cada integrante desarrolló sus cambios en una rama separada. Posteriormente,
+los aportes fueron integrados mediante Pull Requests hacia la rama principal.
+
+La revisión del historial de GitHub permite identificar el autor, el mensaje y
+los archivos modificados en cada commit.
