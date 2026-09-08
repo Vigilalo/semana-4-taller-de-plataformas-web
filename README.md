@@ -122,3 +122,17 @@ Cierra la sesión del usuario y elimina la cookie `token`.
 - Usuario inexistente: respuesta de error según la validación implementada.
 - Acceso sin token: `401 Unauthorized`.
 - Acceso con token válido: `200 OK`.
+## Casos de prueba
+
+| Nº | Caso | Solicitud | Resultado esperado |
+|---:|---|---|---|
+| 1 | Login válido | `POST /login` | `200 OK` y cookie `token` |
+| 2 | Usuario inexistente | `POST /login` | Respuesta de error |
+| 3 | Contraseña incorrecta | `POST /login` | `401 Unauthorized` |
+| 4 | Acceso autorizado | `GET /privada` con cookie | `200 OK` |
+| 5 | Acceso sin token | `GET /privada` sin cookie | `401 Unauthorized` |
+| 6 | Cierre de sesión | `POST /logout` | Cookie eliminada |
+| 7 | Acceso posterior al logout | `GET /privada` | `401 Unauthorized` |
+
+Las pruebas deben ejecutarse mediante Postman o una herramienta equivalente.
+Cada resultado debe respaldarse con una captura de pantalla.
